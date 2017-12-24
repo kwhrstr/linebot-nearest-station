@@ -87,7 +87,7 @@ def handle_location(event):
     imagesize = 1040
 
     # (2)
-    map_image_url = 'https://maps.googleapis.com/maps/api/staticmap?center={},{}&zoom={}&size=520x520&scale=2&maptype=roadmap&key={AIzaSyCqPyyXKmQ1Ij290Fja_vxmMo78kViDqSw}'.format(lat, lon, zoomlevel, 'YOUR_GOOGLE_API_KEY');
+    map_image_url = 'https://maps.googleapis.com/maps/api/staticmap?center={},{}&zoom={}&size=520x520&scale=2&maptype=roadmap&key={}'.format(lat, lon, zoomlevel, 'AIzaSyCqPyyXKmQ1Ij290Fja_vxmMo78kViDqSw');
     map_image_url += '&markers=color:{}|label:{}|{},{}'.format('blue', '', lat, lon)
 
     # (3)
