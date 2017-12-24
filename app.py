@@ -57,7 +57,7 @@ def handle_message(event):
             event.reply_token,
             [
                 TextSendMessage(text=event.message.text),
-                TextSendMessage(text='位置情報を送ると近くで終電まで空いている駅一覧を教えるよ(※絵文字1)'+ str(0x10002A)),
+                TextSendMessage(text='位置情報を送ると近くで終電まで空いている駅一覧を教えるよ(※絵文字1)'+ str('0x10002A')),
                 TextSendMessage(text='line://nv/location'),
             ]
         )
