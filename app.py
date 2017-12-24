@@ -59,6 +59,15 @@ def handle_message(event):
                 TextSendMessage(text=event.message.text),
             ]
         )
+        
+@handler.add(MessageEvent, message=LocationMessage)
+def handle_location(event):
+    line_bot_api.reply_message(
+        event.reply_token,
+        [
+            TextSendMessage(text="{}\n{}\n{}".format(event.message.address, event.message.latitude, event.message.longitude)),
+        ]
+    )
 
 
 if __name__ == "__main__":
