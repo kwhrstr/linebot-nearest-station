@@ -49,6 +49,17 @@ def callback():
 
     return 'OK'
 
+@app.route("/imagemap/<path:url>/<size>")
+def imagemap(url, size):
+    map_image_url = urllib.parse.unquote(url)
+    response = requests.get(map_image_url)
+    img = Image.open(BytesIO(response.content))
+    img_resize = img.resize((int(size), int(size)))
+    byte_io = BytesIO()
+    img_resize.save(byte_io, 'PNG')
+    byte_io.seek(0)
+    return send_file(byte_io, mimetype='image/png')
+
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -59,6 +70,42 @@ def handle_message(event):
                 TextSendMessage(text=event.message.text),
             ]
         )
+
+@handler.add(MessageEvent, message=LocationMessage)
+def handle_location(event):
+    lat = event.message.latitude
+    lon = event.message.longitude
+
+    zoomlevel = 18
+    imagesize = 1040
+
+    # (2)
+    map_image_url = 'https://maps.googleapis.com/maps/api/staticmap?center={},{}&zoom={}&size=520x520&scale=2&maptype=roadmap&key={}'.format(lat, lon, zoomlevel, 'YOUR_GOOGLE_API_KEY');
+    map_image_url += '&markers=color:{}|label:{}|{},{}'.format('blue', '', lat, lon)
+
+    # (3)
+    actions = [
+        MessageImagemapAction(
+            text = 'テスト',
+            area = ImagemapArea(
+                x = 0,
+                y = 0,
+                width = 1040,
+                height = 1040
+        )
+    )]
+    line_bot_api.reply_message(
+        event.reply_token,
+        [
+            ImagemapSendMessage(
+                base_url = 'https://{}/imagemap/{}'.format(request.host, urllib.parse.quote_plus(map_image_url)),
+                alt_text = '地図',
+                # (4)
+                base_size = BaseSize(height=imagesize, width=imagesize),
+                actions = actions
+            )
+        ]
+    )
 
 
 if __name__ == "__main__":
