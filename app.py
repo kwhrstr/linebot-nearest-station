@@ -54,7 +54,7 @@ def callback():
 
     return 'OK'
 
-@app.route("/callback/imagemap/<path:url>/<size>")
+@app.route("/imagemap/<path:url>/<size>")
 def imagemap(url, size):
     map_image_url = urllib.parse.unquote(url)
     response = requests.get(map_image_url)
