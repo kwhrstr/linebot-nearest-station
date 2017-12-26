@@ -89,7 +89,7 @@ def handle_message(event):
                 TextSendMessage(text='お疲れ様です'+ chr(0x10002D)),
                 TextSendMessage(text='位置情報を送ってもらうと近くの駅を教えるよ'+ chr(0x10008D)),
                 TextSendMessage(text='line://nv/location'),
-                TextSendMessage(text=str(root.findall("."))),
+                TextSendMessage(text=str(root.findall("./station"))),
             ]
         )
 
