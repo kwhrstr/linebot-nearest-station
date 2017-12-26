@@ -107,7 +107,7 @@ def handle_location(event):
     # (3)
     actions = [
         MessageImagemapAction(
-            text = root[0][0].text,
+            text = root.tag,
             area = ImagemapArea(
                 x = 0,
                 y = 0,
