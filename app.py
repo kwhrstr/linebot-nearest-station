@@ -74,6 +74,14 @@ def imagemap(url, size):
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+
+    # SimpleAPIから最寄駅取得
+    nearest_station_url = 'http://map.simpleapi.net/stationapi?x={}&y={}&output=xml'.format(lat, lon)
+    nearest_station_req = urllib.request.Request(nearest_station_url)
+    with urllib.request.urlopen(nearest_station_req) as response:
+        XmlData = response.read()
+    root = ET.fromstring(XmlData)
+
     if event.type == "message":
         line_bot_api.reply_message(
             event.reply_token,
@@ -81,6 +89,7 @@ def handle_message(event):
                 TextSendMessage(text='お疲れ様です'+ chr(0x10002D)),
                 TextSendMessage(text='位置情報を送ってもらうと近くの駅を教えるよ'+ chr(0x10008D)),
                 TextSendMessage(text='line://nv/location'),
+                TextSendMessage(text=str(root),
             ]
         )
 
@@ -93,11 +102,11 @@ def handle_location(event):
     imagesize = 1040
 
     # SimpleAPIから最寄駅取得
-    nearest_station_url = 'http://map.simpleapi.net/stationapi?x={}&y={}&output=xml'.format(lat, lon)
-    nearest_station_req = urllib.request.Request(nearest_station_url)
-    with urllib.request.urlopen(nearest_station_req) as response:
-        XmlData = response.read()
-    root = ET.fromstring(XmlData)
+    #nearest_station_url = 'http://map.simpleapi.net/stationapi?x={}&y={}&output=xml'.format(lat, lon)
+    #nearest_station_req = urllib.request.Request(nearest_station_url)
+    #with urllib.request.urlopen(nearest_station_req) as response:
+    #    XmlData = response.read()
+    #root = ET.fromstring(XmlData)
 
 
     # (2)
@@ -107,7 +116,7 @@ def handle_location(event):
     # (3)
     actions = [
         MessageImagemapAction(
-            text = root.find("./station/name"),
+            text = 'テスト',
             area = ImagemapArea(
                 x = 0,
                 y = 0,
