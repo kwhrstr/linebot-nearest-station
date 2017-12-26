@@ -102,11 +102,11 @@ def handle_location(event):
     imagesize = 1040
 
     # SimpleAPIから最寄駅取得
-    #nearest_station_url = 'http://map.simpleapi.net/stationapi?x={}&y={}&output=xml'.format(lat, lon)
-    #nearest_station_req = urllib.request.Request(nearest_station_url)
-    #with urllib.request.urlopen(nearest_station_req) as response:
-    #    XmlData = response.read()
-    #root = ET.fromstring(XmlData)
+    nearest_station_url = 'http://map.simpleapi.net/stationapi?x={}&y={}&output=xml'.format(lat, lon)
+    nearest_station_req = urllib.request.Request(nearest_station_url)
+    with urllib.request.urlopen(nearest_station_req) as response:
+        XmlData = response.read()
+    root = ET.fromstring(XmlData)
 
 
     # (2)
@@ -116,7 +116,7 @@ def handle_location(event):
     # (3)
     actions = [
         MessageImagemapAction(
-            text = 'テスト',
+            text = root.findtext(".//name"),
             area = ImagemapArea(
                 x = 0,
                 y = 0,
