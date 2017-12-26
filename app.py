@@ -16,7 +16,7 @@ from PIL import Image
 import requests
 from io import BytesIO, StringIO
 import urllib.parse
-import urllib
+import urllib.request
 
 import xml.etree.ElementTree as ET
 
