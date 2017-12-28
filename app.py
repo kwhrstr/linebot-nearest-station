@@ -115,7 +115,7 @@ def handle_location(event):
     # (3)
     actions = [
         MessageImagemapAction(
-            text = str(XmlData),
+            text = root.findtext(".//name"),
             area = ImagemapArea(
                 x = 0,
                 y = 0,
