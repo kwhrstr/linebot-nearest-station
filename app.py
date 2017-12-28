@@ -102,7 +102,7 @@ def handle_location(event):
     imagesize = 1040
 
     # SimpleAPIから最寄駅取得
-    nearest_station_url = 'http://map.simpleapi.net/stationapi?x={}&y={}&output=xml'.format(lat, lon)
+    nearest_station_url = 'http://map.simpleapi.net/stationapi?x={}&y={}&output=xml'.format(139.77849382, 35.7040825)
     nearest_station_req = urllib.request.Request(nearest_station_url)
     with urllib.request.urlopen(nearest_station_req) as response:
         XmlData = response.read()
