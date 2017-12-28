@@ -108,7 +108,6 @@ def handle_location(event):
         XmlData = response.read()
     root = ET.fromstring(XmlData)
 
-
     # (2)
     map_image_url = 'https://maps.googleapis.com/maps/api/staticmap?center={},{}&zoom={}&size=520x520&scale=2&maptype=roadmap&key={}'.format(lat, lon, zoomlevel, 'AIzaSyCqPyyXKmQ1Ij290Fja_vxmMo78kViDqSw');
     map_image_url += '&markers=color:{}|label:{}|{},{}'.format('blue', '', lat, lon)
@@ -116,7 +115,7 @@ def handle_location(event):
     # (3)
     actions = [
         MessageImagemapAction(
-            text = str(root.findtext(".//name")),
+            text = root.findtext(".//name"),
             area = ImagemapArea(
                 x = 0,
                 y = 0,
