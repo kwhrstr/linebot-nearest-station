@@ -93,17 +93,28 @@ def handle_location(event):
     zoomlevel = 18
     imagesize = 1040
 
-    # SimpleAPIから最寄駅取得
-    nearest_station_url = 'http://map.simpleapi.net/stationapi?x={}&y={}&output=xml'.format(lon, lat)
-    nearest_station_req = urllib.request.Request(nearest_station_url)
+    # SimpleAPIから最寄駅リストを取得
+    near_station_url = 'http://map.simpleapi.net/stationapi?x={}&y={}&output=xml'.format(lon, lat)
+    near_station_req = urllib.request.Request(nearest_station_url)
     with urllib.request.urlopen(nearest_station_req) as response:
-        XmlData = response.read()
-    root = ET.fromstring(XmlData)
-    nearest_station_name = root.findall(".//name")
+        near_station_XmlData = response.read()
+    near_station_root = ET.fromstring(near_station_XmlData)
+    near_station_list = near_station_root.findall(".//name")
+    near_station_n = len(near_station_list)
 
-    # (2)
+    # 最寄駅名から座標を取得
+    near_location_url = 'https://maps.googleapis.com/maps/api/place/textsearch/xml?query={}&key={}'.format(near_station_list[i].text, 'AIzaSyDap2dQQx8T0SnMuHQ110Pp5mXDvnldXns');
+    near_location_req = urllib.request.Request(near_location_url)
+    with urllib.request.urlopen(near_location_req) as response:
+        near_location_XmlData = response.read()
+    near_location_root = ET.fromstring(near_location_XmlData)
+    near_location_lat = near_location_root.findtext(".//location/lat")
+    near_location_lat = near_location_root.findtext(".//location/lat")
+
     map_image_url = 'https://maps.googleapis.com/maps/api/staticmap?center={},{}&zoom={}&size=520x520&scale=2&maptype=roadmap&key={}'.format(lat, lon, zoomlevel, 'AIzaSyCqPyyXKmQ1Ij290Fja_vxmMo78kViDqSw');
     map_image_url += '&markers=color:{}|label:{}|{},{}'.format('blue', '', lat, lon)
+
+    # 現在地と最寄駅の座標を地図に表示
 
     # (3)
     i = 0
