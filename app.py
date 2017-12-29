@@ -95,8 +95,8 @@ def handle_location(event):
 
     # SimpleAPIから最寄駅リストを取得
     near_station_url = 'http://map.simpleapi.net/stationapi?x={}&y={}&output=xml'.format(lon, lat)
-    near_station_req = urllib.request.Request(nearest_station_url)
-    with urllib.request.urlopen(nearest_station_req) as response:
+    near_station_req = urllib.request.Request(near_station_url)
+    with urllib.request.urlopen(near_station_req) as response:
         near_station_XmlData = response.read()
     near_station_root = ET.fromstring(near_station_XmlData)
     near_station_list = near_station_root.findall(".//name")
