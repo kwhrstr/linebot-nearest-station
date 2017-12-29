@@ -108,8 +108,8 @@ def handle_location(event):
     with urllib.request.urlopen(near_location_req) as response:
         near_location_XmlData = response.read()
     near_location_root = ET.fromstring(near_location_XmlData)
-    near_location_lat = near_location_root.findtext(".//location/lat")
-    near_location_lon = near_location_root.findtext(".//location/lon")
+    near_location_lat = near_location_root.findtext(".//lat")
+    near_location_lon = near_location_root.findtext(".//lon")
 
     map_image_url = 'https://maps.googleapis.com/maps/api/staticmap?center={},{}&zoom={}&size=520x520&scale=2&maptype=roadmap&key={}'.format(lat, lon, zoomlevel, 'AIzaSyCqPyyXKmQ1Ij290Fja_vxmMo78kViDqSw');
     map_image_url += '&markers=color:{}|label:{}|{},{}'.format('blue', '', lat, lon)
