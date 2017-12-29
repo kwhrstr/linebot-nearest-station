@@ -106,9 +106,10 @@ def handle_location(event):
     map_image_url += '&markers=color:{}|label:{}|{},{}'.format('blue', '', lat, lon)
 
     # (3)
+    i = 0
     actions = [
         MessageImagemapAction(
-            text = str(nearest_station_name[1].text),
+            text = nearest_station_name[i].text,
             area = ImagemapArea(
                 x = 0,
                 y = 0,
