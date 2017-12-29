@@ -75,13 +75,6 @@ def imagemap(url, size):
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
 
-    # SimpleAPIから最寄駅取得
-    nearest_station_url = 'http://map.simpleapi.net/stationapi?x={}&y={}&output=xml'.format(139.77849382, 35.7040825)
-    nearest_station_req = urllib.request.Request(nearest_station_url)
-    with urllib.request.urlopen(nearest_station_req) as response:
-        XmlData = response.read()
-    root = ET.fromstring(XmlData)
-
     if event.type == "message":
         line_bot_api.reply_message(
             event.reply_token,
@@ -89,7 +82,6 @@ def handle_message(event):
                 TextSendMessage(text='お疲れ様です'+ chr(0x10002D)),
                 TextSendMessage(text='位置情報を送ってもらうと近くの駅を教えるよ'+ chr(0x10008D)),
                 TextSendMessage(text='line://nv/location'),
-                TextSendMessage(text=root.findtext(".//name")),
             ]
         )
 
@@ -116,7 +108,7 @@ def handle_location(event):
     # (3)
     actions = [
         MessageImagemapAction(
-            text = event.message.title,
+            text = event.message.address,
             area = ImagemapArea(
                 x = 0,
                 y = 0,
@@ -128,7 +120,8 @@ def handle_location(event):
         event.reply_token,
         [
             ImagemapSendMessage(
-                base_url = 'https://{}/imagemap/{}'.format(request.host, urllib.parse.quote_plus(map_image_url)),
+                #base_url = 'https://{}/imagemap/{}'.format(request.host, urllib.parse.quote_plus(map_image_url)),
+                base_url = https://www.google.com/maps/embed/v1/directions?key=AIzaSyBtZ_4xTgXgp_8dr8vTpob_hjPTnfO89jg&origin=Oslo+Norway&destination=Telemark+Norway&avoid=tolls|highways,
                 alt_text = '地図',
                 # (4)
                 base_size = BaseSize(height=imagesize, width=imagesize),
