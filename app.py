@@ -121,7 +121,7 @@ def handle_location(event):
         [
             ImagemapSendMessage(
                 #base_url = 'https://{}/imagemap/{}'.format(request.host, urllib.parse.quote_plus(map_image_url)),
-                base_url = https://www.google.com/maps/embed/v1/directions?key=AIzaSyBtZ_4xTgXgp_8dr8vTpob_hjPTnfO89jg&origin=Oslo+Norway&destination=Telemark+Norway&avoid=tolls|highways,
+                base_url = 'https://www.google.com/maps/embed/v1/directions?key=AIzaSyBtZ_4xTgXgp_8dr8vTpob_hjPTnfO89jg&origin=Oslo+Norway&destination=Telemark+Norway&avoid=tolls|highways',
                 alt_text = '地図',
                 # (4)
                 base_size = BaseSize(height=imagesize, width=imagesize),
