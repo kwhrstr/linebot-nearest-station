@@ -109,7 +109,7 @@ def handle_location(event):
         near_location_XmlData = response.read()
     near_location_root = ET.fromstring(near_location_XmlData)
     near_location_lat = near_location_root.findtext(".//location/lat")
-    near_location_lat = near_location_root.findtext(".//location/lat")
+    near_location_lon = near_location_root.findtext(".//location/lon")
 
     map_image_url = 'https://maps.googleapis.com/maps/api/staticmap?center={},{}&zoom={}&size=520x520&scale=2&maptype=roadmap&key={}'.format(lat, lon, zoomlevel, 'AIzaSyCqPyyXKmQ1Ij290Fja_vxmMo78kViDqSw');
     map_image_url += '&markers=color:{}|label:{}|{},{}'.format('blue', '', lat, lon)
@@ -120,7 +120,7 @@ def handle_location(event):
     i = 0
     actions = [
         MessageImagemapAction(
-            text = nearest_station_name[i].text,
+            text = near_location_lat.text,
             area = ImagemapArea(
                 x = 0,
                 y = 0,
