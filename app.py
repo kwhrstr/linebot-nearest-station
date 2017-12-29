@@ -103,7 +103,7 @@ def handle_location(event):
     near_station_n = len(near_station_list)
 
     # 最寄駅名から座標を取得
-    near_location_url = 'https://maps.googleapis.com/maps/api/place/textsearch/xml?query={}&key={}'.format(near_station_list[i].text, 'AIzaSyDap2dQQx8T0SnMuHQ110Pp5mXDvnldXns');
+    near_location_url = 'https://maps.googleapis.com/maps/api/place/textsearch/xml?query={}&key={}'.format(near_station_list[0].text, 'AIzaSyDap2dQQx8T0SnMuHQ110Pp5mXDvnldXns');
     near_location_req = urllib.request.Request(near_location_url)
     with urllib.request.urlopen(near_location_req) as response:
         near_location_XmlData = response.read()
