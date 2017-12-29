@@ -80,7 +80,7 @@ def handle_message(event):
             event.reply_token,
             [
                 TextSendMessage(text='お疲れ様です'+ chr(0x10002D)),
-                TextSendMessage(text='位置情報を送ってもらうと近くの駅を教えるよ'+ chr(0x10008D)),
+                TextSendMessage(text='位置情報を送ってもらうと近くの駅を教えますよ'+ chr(0x10008D)),
                 TextSendMessage(text='line://nv/location'),
             ]
         )
@@ -99,7 +99,7 @@ def handle_location(event):
     with urllib.request.urlopen(nearest_station_req) as response:
         XmlData = response.read()
     root = ET.fromstring(XmlData)
-    nearest_station_name = root.findtext(".//name")
+    nearest_station_name = root.find(".//name")[0]
 
     # (2)
     map_image_url = 'https://maps.googleapis.com/maps/api/staticmap?center={},{}&zoom={}&size=520x520&scale=2&maptype=roadmap&key={}'.format(lat, lon, zoomlevel, 'AIzaSyCqPyyXKmQ1Ij290Fja_vxmMo78kViDqSw');
@@ -108,7 +108,7 @@ def handle_location(event):
     # (3)
     actions = [
         MessageImagemapAction(
-            text = event.message.address,
+            text = nearest_station_name,
             area = ImagemapArea(
                 x = 0,
                 y = 0,
@@ -120,8 +120,7 @@ def handle_location(event):
         event.reply_token,
         [
             ImagemapSendMessage(
-                #base_url = 'https://{}/imagemap/{}'.format(request.host, urllib.parse.quote_plus(map_image_url)),
-                base_url = 'https://www.google.com/maps/embed/v1/directions?key=AIzaSyBtZ_4xTgXgp_8dr8vTpob_hjPTnfO89jg&origin=Oslo+Norway&destination=Telemark+Norway&avoid=tolls|highways',
+                base_url = 'https://{}/imagemap/{}'.format(request.host, urllib.parse.quote_plus(map_image_url)),
                 alt_text = '地図',
                 # (4)
                 base_size = BaseSize(height=imagesize, width=imagesize),
