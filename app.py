@@ -99,7 +99,7 @@ def handle_location(event):
     with urllib.request.urlopen(nearest_station_req) as response:
         XmlData = response.read()
     root = ET.fromstring(XmlData)
-    nearest_station_name = root.find(".//name")
+    nearest_station_name = root.findall(".//name")
 
     # (2)
     map_image_url = 'https://maps.googleapis.com/maps/api/staticmap?center={},{}&zoom={}&size=520x520&scale=2&maptype=roadmap&key={}'.format(lat, lon, zoomlevel, 'AIzaSyCqPyyXKmQ1Ij290Fja_vxmMo78kViDqSw');
