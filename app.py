@@ -117,7 +117,7 @@ def handle_location(event):
     # 現在地と最寄駅の座標を地図に表示
 
     # (3)
-    i = 0
+    #i = 0
     actions = [
         MessageImagemapAction(
             text = near_location_lat.text,
