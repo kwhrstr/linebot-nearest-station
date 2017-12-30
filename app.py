@@ -122,6 +122,7 @@ def handle_location(event):
     #i = 0
     actions = [
         MessageImagemapAction(
+            text = "test",
             area = ImagemapArea(
                 x = 0,
                 y = 0,
@@ -140,7 +141,7 @@ def handle_location(event):
                 base_size = BaseSize(height=imagesize, width=imagesize),
                 actions = actions,
             ),
-            TextSendMessage(text=near_station_list[0].text + 'が一番近いですね！')
+            TextSendMessage(text=near_station_list[0].text + 'が一番近いですね！'),
         ]
     )
 
