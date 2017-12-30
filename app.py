@@ -110,9 +110,9 @@ def handle_location(event):
         near_station_geo_XmlData = response.read() # type(near_station_geo_XmlData) = "bytes"
     near_station_geo_root = ET.fromstring(near_station_geo_XmlData) # type(near_station_geo_root) = "xml.etree.ElementTree.Element"
     near_station_geo_lat = near_station_geo_root.findtext(".//lat") # type(near_station_geo_lat) = "str"
-    #near_location_lon = near_location_root.findtext(".//lng")
+    near_station_geo_lon = near_station_geo_root.findtext(".//lng")
 
-    map_image_url = 'https://maps.googleapis.com/maps/api/staticmap?center={},{}&zoom={}&size=520x520&scale=2&maptype=roadmap&key={}'.format(lat, lon, zoomlevel, 'AIzaSyCqPyyXKmQ1Ij290Fja_vxmMo78kViDqSw');
+    map_image_url = 'https://maps.googleapis.com/maps/api/staticmap?center={},{}&zoom={}&size=520x520&scale=2&maptype=roadmap&key={}'.format(near_station_geo_lat, near_station_geo_lon, zoomlevel, 'AIzaSyCqPyyXKmQ1Ij290Fja_vxmMo78kViDqSw');
     map_image_url += '&markers=color:{}|label:{}|{},{}'.format('blue', '', lat, lon)
 
     # 現在地と最寄駅の座標を地図に表示
