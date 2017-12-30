@@ -171,8 +171,8 @@ def handle_location(event):
         near_station_direction_time += int(l.text)
     for l in near_station_direction_distance_values:
         near_station_direction_distance += int(l.text)
-    near_station_direction_time = near_station_direction_time/60
-    near_station_direction_distance = near_station_direction_distance/1000 + (near_station_direction_distance/100)%10
+    near_station_direction_time = near_station_direction_time//60
+    near_station_direction_distance = near_station_direction_distance//1000 + (near_station_direction_distance//100)%10
         
 
 
