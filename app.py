@@ -40,6 +40,8 @@ if channel_access_token is None:
 line_bot_api = LineBotApi(channel_access_token)
 handler = WebhookHandler(channel_secret)
 
+near_station_name = "東京駅"
+near_station_address = "日本、〒100-0005 東京都千代田区丸の内１丁目"
 near_station_geo_lat = 35.65910807942215
 near_station_geo_lon = 139.70372892916203
 
@@ -78,6 +80,8 @@ def imagemap(url, size):
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    global near_station_name
+    global near_station_address
     global near_station_geo_lat
     global near_station_geo_lon
 
@@ -103,8 +107,8 @@ def handle_message(event):
                 event.reply_token,
                 [
                     LocationSendMessage(
-                        title='my location',
-                        #address='Tokyo',
+                        title=near_station_name,
+                        address=near_station_address,
                         latitude=near_station_geo_lat,
                         longitude=near_station_geo_lon
                     ),
@@ -114,8 +118,11 @@ def handle_message(event):
 
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location(event):
+    global near_station_name
+    global near_station_address
     global near_station_geo_lat
     global near_station_geo_lon
+    
     lat = event.message.latitude
     lon = event.message.longitude
 
@@ -137,6 +144,9 @@ def handle_location(event):
     with urllib.request.urlopen(near_station_geo_req) as response:
         near_station_geo_XmlData = response.read() # type(near_station_geo_XmlData) = "bytes"
     near_station_geo_root = ET.fromstring(near_station_geo_XmlData) # type(near_station_geo_root) = "xml.etree.ElementTree.Element"
+    
+    near_station_name = near_station_geo_root.findtext(".//name")
+    near_station_address = near_station_geo_root.findtext(".//formatted_address")
     near_station_geo_lat = near_station_geo_root.findtext(".//lat") # type(near_station_geo_lat) = "str"
     near_station_geo_lon = near_station_geo_root.findtext(".//lng")
 
