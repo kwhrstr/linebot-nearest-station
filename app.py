@@ -166,7 +166,7 @@ def handle_location(event):
     near_station_direction_time_second = near_station_direction_root.findtext(".//leg/duration/value")
     near_station_direction_distance_meter = near_station_direction_root.findtext(".//leg/distance/value")
     near_station_direction_time_min = near_station_direction_time_second//60
-    near_station_direction_kilo = near_station_direction_distance_meter//1000 + ((near_station_direction_distance_meter//100)%10)*0.1
+    near_station_direction_distance_kilo = near_station_direction_distance_meter//1000 + ((near_station_direction_distance_meter//100)%10)*0.1
 
 
     map_image_url = 'https://maps.googleapis.com/maps/api/staticmap?size=520x520&scale=2&maptype=roadmap&key={}'.format('AIzaSyCqPyyXKmQ1Ij290Fja_vxmMo78kViDqSw');
