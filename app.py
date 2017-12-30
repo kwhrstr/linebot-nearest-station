@@ -19,10 +19,6 @@ import urllib.parse
 import urllib.request
 
 import xml.etree.ElementTree as ET
-import json
-
-
-
 
 app = Flask(__name__)
 
@@ -106,7 +102,6 @@ def handle_message(event):
             line_bot_api.reply_message(
                 event.reply_token,
                 [
-                    TextSendMessage(text="はい！"+ chr(0x100031)),
                     LocationSendMessage(
                         title=near_station_name,
                         address=near_station_address,
@@ -156,10 +151,21 @@ def handle_location(event):
         near_station_geo_XmlData = response.read() # type(near_station_geo_XmlData) = "bytes"
     near_station_geo_root = ET.fromstring(near_station_geo_XmlData) # type(near_station_geo_root) = "xml.etree.ElementTree.Element"
     
+    #最寄駅情報(名前、住所、緯度経度)を取得
     near_station_name = near_station_geo_root.findtext(".//name")
     near_station_address = near_station_geo_root.findtext(".//formatted_address")
     near_station_geo_lat = near_station_geo_root.findtext(".//lat") # type(near_station_geo_lat) = "str"
     near_station_geo_lon = near_station_geo_root.findtext(".//lng")
+
+    #徒歩時間を取得
+    near_station_direction_url = 'https://maps.googleapis.com/maps/api/directions/xml?origin={},{}&destination={},{}&mode=walking&key={}'.format(lat, lon, near_station_geo_lat, near_station_geo_lon,'AIzaSyCwcWD9ixgh8x_D6CExucsTLSnfwbVTAdc');
+    near_station_direction_req = urllib.request.Request(near_station_direction_url) #object
+    with urllib.request.urlopen(near_station_direction_req) as response:
+        near_station_direction_XmlData = response.read() # type(near_station_geo_XmlData) = "bytes"
+    near_station_direction_root = ET.fromstring(near_station_direction_XmlData)
+    near_station_direction_time = near_station_direction_root.findtext(".//duration/text")
+    near_station_direction_distance = near_station_direction_root.findtext(".//distance/text")
+
 
     map_image_url = 'https://maps.googleapis.com/maps/api/staticmap?size=520x520&scale=2&maptype=roadmap&key={}'.format('AIzaSyCqPyyXKmQ1Ij290Fja_vxmMo78kViDqSw');
     map_image_url += '&markers=color:{}|label:{}|{},{}'.format('red', '', near_station_geo_lat, near_station_geo_lon)
@@ -186,7 +192,9 @@ def handle_location(event):
                 base_size = BaseSize(height=imagesize, width=imagesize),
                 actions = actions,
             ),
-            TextSendMessage(text=near_station_list[0].text + 'が近いですね！'),
+            TextSendMessage(text=near_station_list[0].text + 'が一番近いですね！'),
+            TextSendMessage(text='歩いて' + str(near_station_direction_time) + '。距離は'+ str(near_station_direction_distance) + 'です。'),
+            TextSendMessage(text='画像をタップすれば位置情報を送ります'),
         ]
     )
 
