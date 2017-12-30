@@ -96,16 +96,15 @@ def handle_message(event):
                 event.reply_token,
                 [
                     TextSendMessage(text="どういたしまして！気をつけて帰ってね" + chr(0x100033)),
-                    TextSendMessage(text=str(near_station_geo_lat) + ":" + str(near_station_geo_lon)),
                 ]
             )
-        if event.message.text == "道順教えて！":
+        if event.message.text == "位置情報教えて！":
             line_bot_api.reply_message(
                 event.reply_token,
                 [
                     LocationSendMessage(
                         title='my location',
-                        address='Tokyo',
+                        #address='Tokyo',
                         latitude=near_station_geo_lat,
                         longitude=near_station_geo_lon
                     ),
@@ -151,7 +150,7 @@ def handle_location(event):
     #i = 0
     actions = [
         MessageImagemapAction(
-            text = "道順教えて！",
+            text = "位置情報教えて！",
             area = ImagemapArea(
                 x = 0,
                 y = 0,
