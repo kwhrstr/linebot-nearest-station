@@ -163,8 +163,17 @@ def handle_location(event):
     with urllib.request.urlopen(near_station_direction_req) as response:
         near_station_direction_XmlData = response.read() # type(near_station_geo_XmlData) = "bytes"
     near_station_direction_root = ET.fromstring(near_station_direction_XmlData)
-    near_station_direction_time = near_station_direction_root.findall(".//duration/text")
-    near_station_direction_distance = near_station_direction_root.findall(".//distance/text")
+    near_station_direction_time_values = near_station_direction_root.findall(".//duration/value")
+    near_station_direction_distance_values = near_station_direction_root.findall(".//distance/value")
+    near_station_direction_time = 0
+    near_station_direction_distance = 0
+    for l in near_station_direction_time_values:
+        near_station_direction_time += l.text
+    for l in near_station_direction_distance_values:
+        near_station_direction_distance += l.text
+    near_station_direction_time = near_station_direction_time/60
+    near_station_direction_distance = near_station_direction_distance/1000 + (near_station_direction_distance/100)%10
+        
 
 
     map_image_url = 'https://maps.googleapis.com/maps/api/staticmap?size=520x520&scale=2&maptype=roadmap&key={}'.format('AIzaSyCqPyyXKmQ1Ij290Fja_vxmMo78kViDqSw');
