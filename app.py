@@ -93,6 +93,18 @@ def handle_message(event):
                     TextSendMessage(text=event.message.text),
                 ]
             )
+        if event.message.text == "道順教えて！":
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    LocationSendMessage(
+                        title='my location',
+                        address='Tokyo',
+                        latitude=35.65910807942215,
+                        longitude=139.70372892916203
+                    ),
+                ]
+            )
 
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location(event):
