@@ -78,6 +78,8 @@ def imagemap(url, size):
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    global near_station_geo_lat
+    global near_station_geo_lon
 
     if event.type == "message":
         if event.message.text == "帰るよ！":
