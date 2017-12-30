@@ -109,7 +109,7 @@ def handle_location(event):
     with urllib.request.urlopen(near_station_geo_req) as response:
         near_station_geo_XmlData = response.read() # type(near_station_geo_XmlData) = "bytes"
     near_station_geo_root = ET.fromstring(near_station_geo_XmlData) # type(near_station_geo_root) = "xml.etree.ElementTree.Element"
-    near_station_geo_lat = near_station_geo_root.findtext(".//lat")
+    near_station_geo_lat = near_station_geo_root.findtext(".//lat") # type(near_station_geo_lat) = "str"
     #near_location_lon = near_location_root.findtext(".//lng")
 
     map_image_url = 'https://maps.googleapis.com/maps/api/staticmap?center={},{}&zoom={}&size=520x520&scale=2&maptype=roadmap&key={}'.format(lat, lon, zoomlevel, 'AIzaSyCqPyyXKmQ1Ij290Fja_vxmMo78kViDqSw');
@@ -121,7 +121,7 @@ def handle_location(event):
     #i = 0
     actions = [
         MessageImagemapAction(
-            text = str(type(near_station_geo_lat)),
+            text = near_station_geo_lat,
             area = ImagemapArea(
                 x = 0,
                 y = 0,
