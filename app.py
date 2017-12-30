@@ -45,6 +45,7 @@ near_station_address = "日本、〒100-0005 東京都千代田区丸の内１�
 near_station_geo_lat = 35.65910807942215
 near_station_geo_lon = 139.70372892916203
 near_station_number = 0
+near_station_list = []
 
 @app.route("/")
 def hello_world():
@@ -86,6 +87,7 @@ def handle_message(event):
     global near_station_geo_lat
     global near_station_geo_lon
     global near_station_number
+    global near_station_list
 
     if event.type == "message":
         if (event.message.text == "帰るよー！") or (event.message.text == "帰るよ！") or (event.message.text == "帰る！") or (event.message.text == "帰るよ"):
@@ -120,6 +122,12 @@ def handle_message(event):
             )
         if event.message.text == "次は？":
             near_station_number += 1
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    TextSendMessage(text=near_station_list[near_station_number]),    
+                ]
+            )
         else:
             line_bot_api.reply_message(
                 event.reply_token,
@@ -135,6 +143,7 @@ def handle_location(event):
     global near_station_geo_lat
     global near_station_geo_lon
     global near_station_number
+    global near_station_list
     
     lat = event.message.latitude
     lon = event.message.longitude
@@ -167,7 +176,6 @@ def handle_location(event):
     map_image_url += '&markers=color:{}|label:{}|{},{}'.format('red', '', near_station_geo_lat, near_station_geo_lon)
     map_image_url += '&markers=color:{}|label:{}|{},{}'.format('blue', '', lat, lon)
 
-    #i = 0
     actions = [
         MessageImagemapAction(
             text = "位置情報教えて！",
@@ -189,7 +197,7 @@ def handle_location(event):
                 base_size = BaseSize(height=imagesize, width=imagesize),
                 actions = actions,
             ),
-            TextSendMessage(text=near_station_list[0].text + 'が一番近いですね！'),
+            TextSendMessage(text=near_station_list[near_station_number].text + 'が近いですね！'),
         ]
     )
 
