@@ -163,8 +163,8 @@ def handle_location(event):
     with urllib.request.urlopen(near_station_direction_req) as response:
         near_station_direction_XmlData = response.read() # type(near_station_geo_XmlData) = "bytes"
     near_station_direction_root = ET.fromstring(near_station_direction_XmlData)
-    near_station_direction_time_second = near_station_direction_root.findtext(".//leg/duration/value")
-    near_station_direction_distance_meter = near_station_direction_root.findtext(".//leg/distance/value")
+    near_station_direction_time_second = int(near_station_direction_root.findtext(".//leg/duration/value"))
+    near_station_direction_distance_meter = int(near_station_direction_root.findtext(".//leg/distance/value"))
     near_station_direction_time_min = near_station_direction_time_second//60
     near_station_direction_distance_kilo = near_station_direction_distance_meter//1000 + ((near_station_direction_distance_meter//100)%10)*0.1
 
