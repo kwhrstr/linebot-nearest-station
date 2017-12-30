@@ -115,7 +115,7 @@ def handle_location(event):
     #map_image_url = 'https://maps.googleapis.com/maps/api/staticmap?center={},{}&zoom={}&size=520x520&scale=2&maptype=roadmap&key={}'.format(near_station_geo_lat, near_station_geo_lon, zoomlevel, 'AIzaSyCqPyyXKmQ1Ij290Fja_vxmMo78kViDqSw');
     #map_image_url = 'https://maps.googleapis.com/maps/api/staticmap?center={},{}&size=520x520&scale=2&maptype=roadmap&key={}'.format(near_station_geo_lat, near_station_geo_lon, 'AIzaSyCqPyyXKmQ1Ij290Fja_vxmMo78kViDqSw');
     map_image_url = 'https://maps.googleapis.com/maps/api/staticmap?size=520x520&scale=2&maptype=roadmap&key={}'.format('AIzaSyCqPyyXKmQ1Ij290Fja_vxmMo78kViDqSw');
-    map_image_url += '&markers=color:{}|label:{}|size:{}|{},{}'.format('red', '', 'tiny', near_station_geo_lat, near_station_geo_lon)
+    map_image_url += '&markers=color:{}|label:{}|size:{}|{},{}'.format('red', '', 'mid', near_station_geo_lat, near_station_geo_lon)
     map_image_url += '&markers=color:{}|label:{}|{},{}'.format('blue', '', lat, lon)
 
     # 現在地と最寄駅の座標を地図に表示
