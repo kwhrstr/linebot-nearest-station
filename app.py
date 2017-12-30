@@ -42,10 +42,8 @@ handler = WebhookHandler(channel_secret)
 
 near_station_name = "東京駅"
 near_station_address = "日本、〒100-0005 東京都千代田区丸の内１丁目"
-near_station_geo_lat = 35.65910807942215
-near_station_geo_lon = 139.70372892916203
-near_station_number = 0
-near_station_list = []
+near_station_geo_lat = 35.6811673
+near_station_geo_lon = 139.7670516
 
 @app.route("/")
 def hello_world():
@@ -86,8 +84,6 @@ def handle_message(event):
     global near_station_address
     global near_station_geo_lat
     global near_station_geo_lon
-    global near_station_number
-    global near_station_list
 
     if event.type == "message":
         if (event.message.text == "帰るよー！") or (event.message.text == "帰るよ！") or (event.message.text == "帰る！") or (event.message.text == "帰るよ"):
@@ -117,22 +113,17 @@ def handle_message(event):
                         latitude=near_station_geo_lat,
                         longitude=near_station_geo_lon
                     ),
-                    TextSendMessage(text="タップした後右上のボタンからGoogleMapsなどで開けますよ"+ chr(0x100079)),    
-                ]
-            )
-        if event.message.text == "次は？":
-            near_station_number += 1
-            line_bot_api.reply_message(
-                event.reply_token,
-                [
-                    TextSendMessage(text=near_station_list[near_station_number]),    
+                    TextSendMessage(text="タップした後右上のボタンからGoogleMapsなどで開けますよ"+ chr(0x100079)),
+                    TextSendMessage(text="もし場所が間違えてたらもう一度地図画像をタップしてみたり位置情報を送り直してみてください"),    
                 ]
             )
         else:
             line_bot_api.reply_message(
                 event.reply_token,
                 [
-                    TextSendMessage(text="まだその言葉は教えてもらってないです"+ chr(0x100029) + chr(0x100098)),   
+                    TextSendMessage(text="まだその言葉は教えてもらってないんです"+ chr(0x100029) + chr(0x100098)),
+                    TextSendMessage(text="もしこういう機能が欲しいとかあれば良かったらここにコメントで打ち上げてもらえれば嬉しいです"+ chr(0x100010)), 
+                    TextSendMessage(text="https://qiita.com/trend")   
                 ]
             )
 
@@ -142,8 +133,6 @@ def handle_location(event):
     global near_station_address
     global near_station_geo_lat
     global near_station_geo_lon
-    global near_station_number
-    global near_station_list
     
     lat = event.message.latitude
     lon = event.message.longitude
@@ -161,7 +150,7 @@ def handle_location(event):
     near_station_n = len(near_station_list)
 
     # 最寄駅名から座標を取得
-    near_station_geo_url = 'https://maps.googleapis.com/maps/api/place/textsearch/xml?query={}&key={}'.format(urllib.parse.quote_plus(near_station_list[near_station_number].text, encoding='utf-8'), 'AIzaSyDap2dQQx8T0SnMuHQ110Pp5mXDvnldXns');
+    near_station_geo_url = 'https://maps.googleapis.com/maps/api/place/textsearch/xml?query={}&key={}'.format(urllib.parse.quote_plus(near_station_list[0].text, encoding='utf-8'), 'AIzaSyDap2dQQx8T0SnMuHQ110Pp5mXDvnldXns');
     near_station_geo_req = urllib.request.Request(near_station_geo_url) #object
     with urllib.request.urlopen(near_station_geo_req) as response:
         near_station_geo_XmlData = response.read() # type(near_station_geo_XmlData) = "bytes"
@@ -197,7 +186,7 @@ def handle_location(event):
                 base_size = BaseSize(height=imagesize, width=imagesize),
                 actions = actions,
             ),
-            TextSendMessage(text=near_station_list[near_station_number].text + 'が近いですね！'),
+            TextSendMessage(text=near_station_list[0].text + 'が近いですね！'),
         ]
     )
 
