@@ -135,6 +135,7 @@ def handle_location(event):
                 height = 1040
         )
     )]
+
     line_bot_api.reply_message(
         event.reply_token,
         [
@@ -145,7 +146,7 @@ def handle_location(event):
                 base_size = BaseSize(height=imagesize, width=imagesize),
                 actions = actions,
             ),
-            TextSendMessage(text=near_station_list[0].text + 'が一番近いですね！'),
+            TextSendMessage(text=near_station_list[0].text + 'が一番近いですね！')
         ]
     )
 
