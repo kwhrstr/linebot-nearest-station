@@ -139,7 +139,8 @@ def handle_location(event):
                 # (4)
                 base_size = BaseSize(height=imagesize, width=imagesize),
                 actions = actions
-            )
+            ),
+            TextSendMessage(text=near_station_list[0].text + 'が一番近いですね！'),
         ]
     )
 
