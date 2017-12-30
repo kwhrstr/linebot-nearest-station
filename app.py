@@ -106,8 +106,8 @@ def handle_location(event):
     # 最寄駅名から座標を取得
     near_station_geo_url = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query={}&key={}'.format(near_station_list[0].text, 'AIzaSyDap2dQQx8T0SnMuHQ110Pp5mXDvnldXns');
     near_station_geo_req = urllib.request.Request(near_station_geo_url)
-    #with urllib.request.urlopen(near_station_geo_url) as response:
-    #    near_station_geo_json = json.loads(response.read().decode())
+    with urllib.request.urlopen(near_station_geo_req) as response:
+        near_station_geo_read = response.read()
     #near_location_root = ET.fromstring(near_location_XmlData)
     #near_location_lat = near_location_root.findtext(".//lat")
     #near_location_lon = near_location_root.findtext(".//lng")
@@ -121,7 +121,7 @@ def handle_location(event):
     #i = 0
     actions = [
         MessageImagemapAction(
-            text = str(near_station_geo_req),
+            text = str(near_station_geo_read),
             area = ImagemapArea(
                 x = 0,
                 y = 0,
