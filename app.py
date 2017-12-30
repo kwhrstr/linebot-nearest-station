@@ -122,12 +122,6 @@ def handle_location(event):
     #i = 0
     actions = [
         MessageImagemapAction(
-            actions = LocationSendMessage(
-                    title='my location',
-                    address='Tokyo',
-                    latitude=35.65910807942215,
-                    longitude=139.70372892916203
-            ),
             area = ImagemapArea(
                 x = 0,
                 y = 0,
