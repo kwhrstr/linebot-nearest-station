@@ -86,7 +86,7 @@ def handle_message(event):
     global near_station_geo_lon
 
     if event.type == "message":
-        if event.message.text == "帰るよ！":
+        if event.message.text == "帰るよ-！" or event.message.text == "帰るよ！":
             line_bot_api.reply_message(
                 event.reply_token,
                 [
@@ -106,13 +106,21 @@ def handle_message(event):
             line_bot_api.reply_message(
                 event.reply_token,
                 [
+                    TextSendMessage(text="はい！"+ chr(0x100031)),
                     LocationSendMessage(
                         title=near_station_name,
                         address=near_station_address,
                         latitude=near_station_geo_lat,
                         longitude=near_station_geo_lon
                     ),
-                    TextSendMessage(text=str(near_station_geo_lat) + ":" + str(near_station_geo_lon)),
+                    TextSendMessage(text="タップした後右上のボタンからGoogleMapsなどで開けますよ"+ chr(0x100079)),    
+                ]
+            )
+        else:
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    TextSendMessage(text="まだその言葉は教えてもらってないです"+ chr(0x100098)),    
                 ]
             )
 
