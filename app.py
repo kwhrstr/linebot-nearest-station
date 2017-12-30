@@ -122,7 +122,12 @@ def handle_location(event):
     #i = 0
     actions = [
         MessageImagemapAction(
-            text = near_station_geo_lat,
+            actions = LocationSendMessage(
+                    title='my location',
+                    address='Tokyo',
+                    latitude=35.65910807942215,
+                    longitude=139.70372892916203
+            ),
             area = ImagemapArea(
                 x = 0,
                 y = 0,
@@ -138,12 +143,7 @@ def handle_location(event):
                 alt_text = '地図',
                 # (4)
                 base_size = BaseSize(height=imagesize, width=imagesize),
-                actions = [ LocationSendMessage(
-                    title='my location',
-                    address='Tokyo',
-                    latitude=35.65910807942215,
-                    longitude=139.70372892916203
-                )],
+                actions = actions,
             ),
             TextSendMessage(text=near_station_list[0].text + 'が一番近いですね！'),
         ]
