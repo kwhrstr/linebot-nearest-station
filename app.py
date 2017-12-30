@@ -105,9 +105,8 @@ def handle_message(event):
                 [
                     LocationSendMessage(
                         title='my location',
-                        address='Tokyo',
                         latitude=near_station_geo_lat,
-                        longitude=near_station_geo_lon
+                        longitude=near_station_geo_lon, 
                     ),
                 ]
             )
