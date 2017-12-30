@@ -194,6 +194,7 @@ def handle_location(event):
             ),
             TextSendMessage(text=near_station_list[0].text + 'が一番近いですね！'),
             TextSendMessage(text='歩いて' + str(near_station_direction_time) + '。距離は'+ str(near_station_direction_distance) + 'です。'),
+            TextSendMessage(text=str(lat) + ':'+ str(lon) + ',' + str(near_station_geo_lat) + ':'+ str(near_station_geo_lon) + ','),
             TextSendMessage(text='画像をタップすれば位置情報を送ります'),
         ]
     )
