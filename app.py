@@ -77,14 +77,22 @@ def imagemap(url, size):
 def handle_message(event):
 
     if event.type == "message":
-        line_bot_api.reply_message(
-            event.reply_token,
-            [
-                TextSendMessage(text='お疲れ様です'+ chr(0x10002D)),
-                TextSendMessage(text='位置情報を送ってもらうと近くの駅を教えますよ'+ chr(0x10008D)),
-                TextSendMessage(text='line://nv/location'),
-            ]
-        )
+        if event.message.text == "帰るよ！":
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    TextSendMessage(text='お疲れ様です'+ chr(0x10002D)),
+                    TextSendMessage(text='位置情報を送ってもらうと近くの駅を教えますよ'+ chr(0x10008D)),
+                    TextSendMessage(text='line://nv/location'),
+                ]
+            )
+        if event.message.text == "はいよ":
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    TextSendMessage(text=event.message.text),
+                ]
+            )
 
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location(event):
@@ -122,7 +130,7 @@ def handle_location(event):
     #i = 0
     actions = [
         MessageImagemapAction(
-            text = "test",
+            text = "道順教えて！",
             area = ImagemapArea(
                 x = 0,
                 y = 0,
