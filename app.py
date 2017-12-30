@@ -96,6 +96,7 @@ def handle_message(event):
                 event.reply_token,
                 [
                     TextSendMessage(text="どういたしまして！気をつけて帰ってね" + chr(0x100033)),
+                    TextSendMessage(text=near_station_geo_lat + ":" + near_station_geo_lon),
                 ]
             )
         if event.message.text == "道順教えて！":
