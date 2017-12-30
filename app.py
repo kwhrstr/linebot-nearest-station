@@ -91,7 +91,7 @@ def handle_message(event):
                     TextSendMessage(text='line://nv/location'),
                 ]
             )
-        if event.message.text == "ありがとう！":
+        if (event.message.text == "ありがとう！") or (event.message.text == "ありがとう") or (event.message.text == "ありがと！") or (event.message.text == "ありがと"):
             line_bot_api.reply_message(
                 event.reply_token,
                 [
@@ -196,7 +196,6 @@ def handle_location(event):
             ),
             TextSendMessage(text=near_station_list[0].text + 'が一番近いですね！'),
             TextSendMessage(text='歩いて約' + str(near_station_direction_time_min) + '分。距離は約'+ str(near_station_direction_distance_kilo) + 'kmです。'),
-            TextSendMessage(text=str(lat) + ':'+ str(lon) + ',' + str(near_station_geo_lat) + ':'+ str(near_station_geo_lon) + ','),
             TextSendMessage(text='画像をタップすれば位置情報を送ります'),
         ]
     )
