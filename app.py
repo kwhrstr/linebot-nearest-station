@@ -19,6 +19,7 @@ import urllib.parse
 import urllib.request
 
 import xml.etree.ElementTree as ET
+import chardet
 
 
 
