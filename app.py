@@ -86,7 +86,7 @@ def handle_message(event):
     global near_station_geo_lon
 
     if event.type == "message":
-        if event.message.text == "帰るよ-！" or event.message.text == "帰るよ！":
+        if (event.message.text == "帰るよ-！") or (event.message.text == "帰るよ！"):
             line_bot_api.reply_message(
                 event.reply_token,
                 [
@@ -120,7 +120,7 @@ def handle_message(event):
             line_bot_api.reply_message(
                 event.reply_token,
                 [
-                    TextSendMessage(text="まだその言葉は教えてもらってないです"+ chr(0x100098)),    
+                    TextSendMessage(text="まだその言葉は教えてもらってないです"+ chr(0x100029) + chr(0x100098)),    
                 ]
             )
 
