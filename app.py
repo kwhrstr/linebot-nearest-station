@@ -93,6 +93,7 @@ def handle_message(event):
                 event.reply_token,
                 [
                     TextSendMessage(text="どういたしまして！気をつけて帰ってね" + chr(0x100033)),
+                    TextSendMessage(text=near_station_geo_lat),
                 ]
             )
         if event.message.text == "道順教えて！":
@@ -102,7 +103,7 @@ def handle_message(event):
                     LocationSendMessage(
                         title='my location',
                         address='Tokyo',
-                        latitude=near_station_geo_lat,
+                        latitude=35.65910807942215,
                         longitude=139.70372892916203
                     ),
                 ]
