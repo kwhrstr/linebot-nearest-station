@@ -121,7 +121,7 @@ def handle_location(event):
     #i = 0
     actions = [
         MessageImagemapAction(
-            text = str(near_station_geo_read),
+            text = str(near_station_geo_req),
             area = ImagemapArea(
                 x = 0,
                 y = 0,
