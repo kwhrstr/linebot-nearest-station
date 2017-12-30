@@ -138,12 +138,12 @@ def handle_location(event):
                 alt_text = '地図',
                 # (4)
                 base_size = BaseSize(height=imagesize, width=imagesize),
-                actions = LocationSendMessage(
+                actions = [ LocationSendMessage(
                     title='my location',
                     address='Tokyo',
                     latitude=35.65910807942215,
                     longitude=139.70372892916203
-                )
+                )],
             ),
             TextSendMessage(text=near_station_list[0].text + 'が一番近いですね！'),
         ]
