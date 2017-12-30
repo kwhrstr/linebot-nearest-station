@@ -123,7 +123,7 @@ def handle_location(event):
     #i = 0
     actions = [
         MessageImagemapAction(
-            text = near_station_list[0].text,
+            text = str(chardet.detect(near_station_list[0].text)),
             area = ImagemapArea(
                 x = 0,
                 y = 0,
