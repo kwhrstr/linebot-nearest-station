@@ -40,6 +40,8 @@ if channel_access_token is None:
 line_bot_api = LineBotApi(channel_access_token)
 handler = WebhookHandler(channel_secret)
 
+near_station_geo_lat = 0
+
 @app.route("/")
 def hello_world():
     return "hello world!"
@@ -86,11 +88,11 @@ def handle_message(event):
                     TextSendMessage(text='line://nv/location'),
                 ]
             )
-        if event.message.text == "はいよ":
+        if event.message.text == "ありがとう！":
             line_bot_api.reply_message(
                 event.reply_token,
                 [
-                    TextSendMessage(text=event.message.text),
+                    TextSendMessage(text="どういたしまして！気をつけて帰ってね" + chr(0x100033)),
                 ]
             )
         if event.message.text == "道順教えて！":
@@ -100,7 +102,7 @@ def handle_message(event):
                     LocationSendMessage(
                         title='my location',
                         address='Tokyo',
-                        latitude=35.65910807942215,
+                        latitude=near_station_geo_lat,
                         longitude=139.70372892916203
                     ),
                 ]
@@ -108,6 +110,7 @@ def handle_message(event):
 
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location(event):
+    global near_station_geo_lat
     lat = event.message.latitude
     lon = event.message.longitude
 
