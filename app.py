@@ -163,17 +163,18 @@ def handle_location(event):
     with urllib.request.urlopen(near_station_direction_req) as response:
         near_station_direction_XmlData = response.read() # type(near_station_geo_XmlData) = "bytes"
     near_station_direction_root = ET.fromstring(near_station_direction_XmlData)
-    near_station_direction_time_values = near_station_direction_root.findall(".//duration/value")
-    near_station_direction_distance_values = near_station_direction_root.findall(".//distance/value")
+    near_station_direction_time_values = near_station_direction_root.findtext(".//leg/duration/value")
+    near_station_direction_distance_values = near_station_direction_root.findtext(".//leg/distance/value")
     near_station_direction_time = 0
     near_station_direction_distance = 0
+    """
     for l in near_station_direction_time_values:
         near_station_direction_time += int(l.text)
     for l in near_station_direction_distance_values:
         near_station_direction_distance += int(l.text)
     near_station_direction_time = near_station_direction_time//60
     near_station_direction_distance = near_station_direction_distance//1000 + ((near_station_direction_distance//100)%10)*0.1
-        
+    """ 
 
 
     map_image_url = 'https://maps.googleapis.com/maps/api/staticmap?size=520x520&scale=2&maptype=roadmap&key={}'.format('AIzaSyCqPyyXKmQ1Ij290Fja_vxmMo78kViDqSw');
@@ -202,7 +203,7 @@ def handle_location(event):
                 actions = actions,
             ),
             TextSendMessage(text=near_station_list[0].text + 'が一番近いですね！'),
-            TextSendMessage(text='歩いて約' + str(near_station_direction_time) + '分。距離は約'+ str(near_station_direction_distance) + 'kmです。'),
+            TextSendMessage(text='歩いて約' + str(near_station_direction_time_values) + '分。距離は約'+ str(near_station_direction_distance_values) + 'kmです。'),
             TextSendMessage(text=str(lat) + ':'+ str(lon) + ',' + str(near_station_geo_lat) + ':'+ str(near_station_geo_lon) + ','),
             TextSendMessage(text='画像をタップすれば位置情報を送ります'),
         ]
