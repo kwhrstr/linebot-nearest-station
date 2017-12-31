@@ -76,17 +76,17 @@ def imagemap(url, size):
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    #global near_station_name
-    #global near_station_address
-    #global near_station_geo_lat
-    #global near_station_geo_lon
+    global near_station_name
+    global near_station_address
+    global near_station_geo_lat
+    global near_station_geo_lon
 
     if event.type == "message":
         if (event.message.text == "帰るよー！") or (event.message.text == "帰るよ！") or (event.message.text == "帰る！") or (event.message.text == "帰るよ"):
             line_bot_api.reply_message(
                 event.reply_token,
                 [
-                    TextSendMessage(text='お疲れ様です'+ chr(0x10002D)),
+                    TextSendMessage(text=event.source.userId + 'お疲れ様です'+ chr(0x10002D)),
                     TextSendMessage(text='位置情報を送ってもらうと近くの駅を教えますよ'+ chr(0x10008D)),
                     TextSendMessage(text='line://nv/location'),
                 ]
@@ -117,8 +117,6 @@ def handle_message(event):
                 event.reply_token,
                 [
                     TextSendMessage(text="まだその言葉は教えてもらってないんです"+ chr(0x100029) + chr(0x100098)),
-                    TextSendMessage(text="もしこういう機能が欲しいとかあれば良かったらここにコメントで打ち上げてもらえれば嬉しいです"+ chr(0x100010)), 
-                    TextSendMessage(text="https://qiita.com/trend")   
                 ]
             )
 
@@ -146,22 +144,22 @@ def handle_location(event):
 
     # 最寄駅名から座標を取得
     near_station_geo_url = 'https://maps.googleapis.com/maps/api/place/textsearch/xml?query={}&key={}'.format(urllib.parse.quote_plus(near_station_list[0].text, encoding='utf-8'), 'AIzaSyDap2dQQx8T0SnMuHQ110Pp5mXDvnldXns');
-    near_station_geo_req = urllib.request.Request(near_station_geo_url) #object
+    near_station_geo_req = urllib.request.Request(near_station_geo_url) 
     with urllib.request.urlopen(near_station_geo_req) as response:
-        near_station_geo_XmlData = response.read() # type(near_station_geo_XmlData) = "bytes"
-    near_station_geo_root = ET.fromstring(near_station_geo_XmlData) # type(near_station_geo_root) = "xml.etree.ElementTree.Element"
+        near_station_geo_XmlData = response.read() 
+    near_station_geo_root = ET.fromstring(near_station_geo_XmlData) 
     
     #最寄駅情報(名前、住所、緯度経度)を取得
     near_station_name = near_station_geo_root.findtext(".//name")
     near_station_address = near_station_geo_root.findtext(".//formatted_address")
-    near_station_geo_lat = near_station_geo_root.findtext(".//lat") # type(near_station_geo_lat) = "str"
+    near_station_geo_lat = near_station_geo_root.findtext(".//lat") 
     near_station_geo_lon = near_station_geo_root.findtext(".//lng")
 
     #徒歩時間を取得
     near_station_direction_url = 'https://maps.googleapis.com/maps/api/directions/xml?origin={},{}&destination={},{}&mode=walking&key={}'.format(lat, lon, near_station_geo_lat, near_station_geo_lon,'AIzaSyCwcWD9ixgh8x_D6CExucsTLSnfwbVTAdc');
-    near_station_direction_req = urllib.request.Request(near_station_direction_url) #object
+    near_station_direction_req = urllib.request.Request(near_station_direction_url) 
     with urllib.request.urlopen(near_station_direction_req) as response:
-        near_station_direction_XmlData = response.read() # type(near_station_geo_XmlData) = "bytes"
+        near_station_direction_XmlData = response.read() 
     near_station_direction_root = ET.fromstring(near_station_direction_XmlData)
     near_station_direction_time_second = int(near_station_direction_root.findtext(".//leg/duration/value"))
     near_station_direction_distance_meter = int(near_station_direction_root.findtext(".//leg/distance/value"))
