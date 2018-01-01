@@ -11,21 +11,20 @@ from linebot.exceptions import (
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage, LocationMessage, MessageImagemapAction, ImagemapArea, ImagemapSendMessage, BaseSize, LocationSendMessage
 )
-
 from PIL import Image
 import requests
 from io import BytesIO, StringIO
 import urllib.parse
 import urllib.request
-
 import xml.etree.ElementTree as ET
-import json
 
 app = Flask(__name__)
 
-# 環境変数からchannel_secret・channel_access_tokenを取得
+# 環境変数から各種KEYを取得
 channel_secret = os.environ['LINE_CHANNEL_SECRET']
 channel_access_token = os.environ['LINE_CHANNEL_ACCESS_TOKEN']
+google_places_api_key = os.environ['GOOGLE_PLACES_API_KEY']
+google_staticmaps_api_key = os.environ['GOOGLE_STATICMAPS_API_KEY']
 
 if channel_secret is None:
     print('Specify LINE_CHANNEL_SECRET as environment variable.')
@@ -144,7 +143,7 @@ def handle_location(event):
     near_station_n = len(near_station_list)
 
     # 最寄駅名から座標を取得
-    near_station_geo_url = 'https://maps.googleapis.com/maps/api/place/textsearch/xml?query={}&key={}'.format(urllib.parse.quote_plus(near_station_list[0].text, encoding='utf-8'), 'AIzaSyDap2dQQx8T0SnMuHQ110Pp5mXDvnldXns');
+    near_station_geo_url = 'https://maps.googleapis.com/maps/api/place/textsearch/xml?query={}&key={}'.format(urllib.parse.quote_plus(near_station_list[0].text, encoding='utf-8'), google_places_api_key);
     near_station_geo_req = urllib.request.Request(near_station_geo_url) 
     with urllib.request.urlopen(near_station_geo_req) as response:
         near_station_geo_XmlData = response.read() 
@@ -157,7 +156,7 @@ def handle_location(event):
     near_station_geo_lon = near_station_geo_root.findtext(".//lng")
 
     #徒歩時間を取得
-    near_station_direction_url = 'https://maps.googleapis.com/maps/api/directions/xml?origin={},{}&destination={},{}&mode=walking&key={}'.format(lat, lon, near_station_geo_lat, near_station_geo_lon,'AIzaSyCwcWD9ixgh8x_D6CExucsTLSnfwbVTAdc');
+    near_station_direction_url = 'https://maps.googleapis.com/maps/api/directions/xml?origin={},{}&destination={},{}&mode=walking&key={}'.format(lat, lon, near_station_geo_lat, near_station_geo_lon, google_directions_api_key);
     near_station_direction_req = urllib.request.Request(near_station_direction_url) 
     with urllib.request.urlopen(near_station_direction_req) as response:
         near_station_direction_XmlData = response.read() 
@@ -168,7 +167,7 @@ def handle_location(event):
     near_station_direction_distance_kilo = near_station_direction_distance_meter//1000 + ((near_station_direction_distance_meter//100)%10)*0.1
 
 
-    map_image_url = 'https://maps.googleapis.com/maps/api/staticmap?size=520x520&scale=2&maptype=roadmap&key={}'.format('AIzaSyCqPyyXKmQ1Ij290Fja_vxmMo78kViDqSw');
+    map_image_url = 'https://maps.googleapis.com/maps/api/staticmap?size=520x520&scale=2&maptype=roadmap&key={}'.format(google_staticmaps_api_key);
     map_image_url += '&markers=color:{}|label:{}|{},{}'.format('red', '', near_station_geo_lat, near_station_geo_lon)
     map_image_url += '&markers=color:{}|label:{}|{},{}'.format('blue', '', lat, lon)
 
