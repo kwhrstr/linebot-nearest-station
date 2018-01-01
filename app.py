@@ -37,10 +37,10 @@ if channel_access_token is None:
 line_bot_api = LineBotApi(channel_access_token)
 handler = WebhookHandler(channel_secret)
 
-near_station_name = "東京駅"
-near_station_address = "日本、〒100-0005 東京都千代田区丸の内１丁目"
-near_station_geo_lat = 35.6811673
-near_station_geo_lon = 139.7670516
+#near_station_name = "東京駅"
+#near_station_address = "日本、〒100-0005 東京都千代田区丸の内１丁目"
+#near_station_geo_lat = 35.6811673
+#near_station_geo_lon = 139.7670516
 
 @app.route("/")
 def hello_world():
@@ -82,14 +82,12 @@ def handle_message(event):
     global near_station_geo_lat
     global near_station_geo_lon
 
-    profile = line_bot_api.get_profile(event.source.user_id)
-
     if event.type == "message":
         if (event.message.text == "帰るよー！") or (event.message.text == "帰るよ！") or (event.message.text == "帰る！") or (event.message.text == "帰るよ"):
             line_bot_api.reply_message(
                 event.reply_token,
                 [
-                    TextSendMessage(text= str(profile.display_name) + 'お疲れ様です'+ chr(0x10002D)),
+                    TextSendMessage(text='お疲れ様です'+ chr(0x10002D)),
                     TextSendMessage(text='位置情報を送ってもらうと近くの駅を教えますよ'+ chr(0x10008D)),
                     TextSendMessage(text='line://nv/location'),
                 ]
