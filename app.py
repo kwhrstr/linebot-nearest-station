@@ -37,10 +37,10 @@ if channel_access_token is None:
 line_bot_api = LineBotApi(channel_access_token)
 handler = WebhookHandler(channel_secret)
 
-#near_station_name = "東京駅"
-#near_station_address = "日本、〒100-0005 東京都千代田区丸の内１丁目"
-#near_station_geo_lat = 35.6811673
-#near_station_geo_lon = 139.7670516
+near_station_name = "東京駅"
+near_station_address = "日本、〒100-0005 東京都千代田区丸の内１丁目"
+near_station_geo_lat = 35.6811673
+near_station_geo_lon = 139.7670516
 
 @app.route("/")
 def hello_world():
