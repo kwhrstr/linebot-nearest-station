@@ -189,7 +189,6 @@ def handle_location(event):
             ImagemapSendMessage(
                 base_url = 'https://{}/imagemap/{}'.format(request.host, urllib.parse.quote_plus(map_image_url)),
                 alt_text = '地図',
-                # (4)
                 base_size = BaseSize(height=imagesize, width=imagesize),
                 actions = actions,
             ),
