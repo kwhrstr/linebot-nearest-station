@@ -81,7 +81,7 @@ def handle_message(event):
     global near_station_geo_lat
     global near_station_geo_lon
 
-    profile = line_bot_api.get_profile(event.source.userId)
+    profile = line_bot_api.get_profile(event.source.type)
 
     if event.type == "message":
         if (event.message.text == "帰るよー！") or (event.message.text == "帰るよ！") or (event.message.text == "帰る！") or (event.message.text == "帰るよ"):
