@@ -24,6 +24,7 @@ app = Flask(__name__)
 channel_secret = os.environ['LINE_CHANNEL_SECRET']
 channel_access_token = os.environ['LINE_CHANNEL_ACCESS_TOKEN']
 google_places_api_key = os.environ['GOOGLE_PLACES_API_KEY']
+google_directions_api_key = os.environ['GOOGLE_DIRECTIONS_API_KEY']
 google_staticmaps_api_key = os.environ['GOOGLE_STATICMAPS_API_KEY']
 
 if channel_secret is None:
