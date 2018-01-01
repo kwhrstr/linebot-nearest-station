@@ -88,7 +88,7 @@ def handle_message(event):
             line_bot_api.reply_message(
                 event.reply_token,
                 [
-                    TextSendMessage(text= event.source.type + 'お疲れ様です'+ chr(0x10002D)),
+                    TextSendMessage(text= event.source.userId + 'お疲れ様です'+ chr(0x10002D)),
                     TextSendMessage(text='位置情報を送ってもらうと近くの駅を教えますよ'+ chr(0x10008D)),
                     TextSendMessage(text='line://nv/location'),
                 ]
