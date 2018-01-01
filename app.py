@@ -77,12 +77,11 @@ def imagemap(url, size):
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    """
-    global near_station_name
-    global near_station_address
-    global near_station_geo_lat
-    global near_station_geo_lon
-    """
+    
+    #global near_station_name
+    #global near_station_address
+    #global near_station_geo_lat
+    #global near_station_geo_lon
 
     profile = line_bot_api.get_profile(event.source.user_id)
 
@@ -103,22 +102,22 @@ def handle_message(event):
                     TextSendMessage(text="どういたしまして！気をつけて帰ってね" + chr(0x100033)),
                 ]
             )
-        """
-        if event.message.text == "位置情報教えて！":
-            line_bot_api.reply_message(
-                event.reply_token,
-                [
-                    LocationSendMessage(
-                        title=near_station_name,
-                        address=near_station_address,
-                        latitude=near_station_geo_lat,
-                        longitude=near_station_geo_lon
-                    ),
-                    TextSendMessage(text="タップした後右上のボタンからGoogleMapsなどで開けますよ"+ chr(0x100079)),
-                    TextSendMessage(text="もし場所が間違えてたらもう一度地図画像をタップしてみたり位置情報を送り直してみてください"),    
-                ]
-            )
-        """
+    
+        #if event.message.text == "位置情報教えて！":
+        #    line_bot_api.reply_message(
+        #        event.reply_token,
+        #        [
+        #            LocationSendMessage(
+        #                title=near_station_name,
+        #                address=near_station_address,
+        #                latitude=near_station_geo_lat,
+        #                longitude=near_station_geo_lon
+        #            ),
+        #            TextSendMessage(text="タップした後右上のボタンからGoogleMapsなどで開けますよ"+ chr(0x100079)),
+        #            TextSendMessage(text="もし場所が間違えてたらもう一度地図画像をタップしてみたり位置情報を送り直してみてください"),    
+        #        ]
+        #    )
+
         else:
             line_bot_api.reply_message(
                 event.reply_token,
